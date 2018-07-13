@@ -33,7 +33,21 @@ RSpec.describe UsersController, type: :controller do
   
   describe 'GET #show' do
     it "displays the user's profile" do
+      User.create!(username: "Peter", password: "peterpeter")
+      get :show, params: { id: User.last.id }
+      
+      expect(response).to have_http_status(200)
+      expect(response).to render_template('show')
     end 
   end
+  
+  describe 'GET #index' do
+    it 'displays all users' do 
+      get :index 
+      
+      expect(response).to have_http_status(200)
+      expect(response).to render_template('index')
+    end 
+  end 
   
 end
